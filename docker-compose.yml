@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  app_v1:
+    build: ./app_v1
+    container_name: app_v1
+
+  app_v2:
+    build: ./app_v2
+    container_name: app_v2
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/active.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app_v1
+      - app_v2
